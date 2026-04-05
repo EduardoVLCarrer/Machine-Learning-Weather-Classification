@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Previsão de Chuva na Austrália</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="javascript/script.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <div class="box">
+            <div class="hero-text">
+                <span class="tag">Machine Learning + Flask</span>
+                <h1>Previsão de Chuva na Austrália</h1>
+                <p>
+                    Aplicação full stack para prever se vai chover no dia seguinte
+                    com base em dados meteorológicos do dataset weatherAUS.
+                </p>
+            </div>
+
+            <div class="hero-image">
+                <img src="aus_map_img.png" alt="Mapa da Austrália com tema de chuva" />
+            </div>
+        </div>
+    </header>
+
+    <section class="container">
+
+        <div class="card left-up">
+            <h2>Predição por linha CSV</h2>
+            <p>
+                Cole uma linha completa do dataset original, separada por vírgulas.
+                O sistema irá interpretar os campos automaticamente na ordem correta.
+            </p>
+
+            <label for="csvLine" class="label-title">Linha do CSV</label>
+            <textarea
+                id="csvLine"
+                placeholder="Ex: 2008-12-29,Albury,19.7,27.2,0,NA,NA,WNW,46,NW,WSW,19,30,49,22,1004.8,1004.2,NA,NA,21.6,26.1,No"
+            ></textarea>
+
+            <div class="button-row">
+                <button id="predictCsvBtn" type="button">Prever com CSV</button>
+                <button id="clearCsvBtn" type="button" class="secondary-btn">Limpar</button>
+            </div>
+        </div>
+
+        <div class="card right-up">
+            <h2>Predição por formulário</h2>
+            <p>
+                Preencha os campos manualmente para testar o modelo diretamente
+                com os valores meteorológicos.
+            </p>
+
+            <div class="form-grid">
+                <div class="field">
+                    <label for="Date">Date</label>
+                    <input id="Date" type="text" placeholder="2008-12-29" />
+                </div>
+
+                <div class="field">
+                    <label for="Location">Location</label>
+                    <input id="Location" type="text" placeholder="Albury" />
+                </div>
+
+                <div class="field">
+                    <label for="MinTemp">MinTemp</label>
+                    <input id="MinTemp" type="number" step="any" />
+                </div>
+
+                <div class="field">
+                    <label for="MaxTemp">MaxTemp</label>
+                    <input id="MaxTemp" type="number" step="any" />
+                </div>
+
+                <div class="field">
+                    <label for="Rainfall">Rainfall</label>
+                    <input id="Rainfall" type="number" step="any" />
+                </div>
+
+                <div class="field">
+                    <label for="Evaporation">Evaporation</label>
+                    <input id="Evaporation" type="number" step="any" />
+                </div>
+
+                <div class="field">
+                    <label for="WindGustDir">WindGustDir</label>
+                    <input id="WindGustDir" type="text" placeholder="WNW" />
+                </div>
+
+                <div class="field">
+                    <label for="WindGustSpeed">WindGustSpeed</label>
+                    <input id="WindGustSpeed" type="number" step="any" />
+                </div>
+
+                <div class="field">
+                    <label for="WindDir9am">WindDir9am</label>
+                    <input id="WindDir9am" type="text" placeholder="NW" />
+                </div>
+
+                <div class="field">
+                    <label for="WindDir3pm">WindDir3pm</label>
+                    <input id="WindDir3pm" type="text" placeholder="WSW" />
+                </div>
+
+                <div class="field">
+                    <label for="WindSpeed9am">WindSpeed9am</label>
+                    <input id="WindSpeed9am" type="number" step="any" />
+                </div>
+
+                <div class="field">
+                    <label for="WindSpeed3pm">WindSpeed3pm</label>
+                    <input id="WindSpeed3pm" type="number" step="any" />
+                </div>
+
+                <div class="field">
+                    <label for="Humidity9am">Humidity9am</label>
+                    <input id="Humidity9am" type="number" step="any" />
+                </div>
+
+                <div class="field">
+                    <label for="Humidity3pm">Humidity3pm</label>
+                    <input id="Humidity3pm" type="number" step="any" />
+                </div>
+
+                <div class="field">
+                    <label for="Pressure9am">Pressure9am</label>
+                    <input id="Pressure9am" type="number" step="any" />
+                </div>
+
+                <div class="field">
+                    <label for="Pressure3pm">Pressure3pm</label>
+                    <input id="Pressure3pm" type="number" step="any" />
+                </div>
+
+                <div class="field">
+                    <label for="Temp9am">Temp9am</label>
+                    <input id="Temp9am" type="number" step="any" />
+                </div>
+
+                <div class="field">
+                    <label for="Temp3pm">Temp3pm</label>
+                    <input id="Temp3pm" type="number" step="any" />
+                </div>
+
+                <div class="field field-full">
+                    <label for="RainToday">RainToday</label>
+                    <select id="RainToday">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="button-row">
+                <button id="predictFormBtn" type="button">Prever com formulário</button>
+                <button id="clearFormBtn" type="button" class="secondary-btn">Limpar</button>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <div class="result-card">
+            <h2>Resultado da Predição</h2>
+            <p class="result-description">
+                O retorno do modelo aparecerá abaixo após o envio dos dados.
+            </p>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Tipo de Entrada</th>
+                        <th>Resultado</th>
+                        <th>Mensagem</th>
+                    </tr>
+                </thead>
+                <tbody id="data-output">
+                    <tr>
+                        <td colspan="3">Nenhuma predição realizada ainda.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </footer>
+
+</body>
+</html>
